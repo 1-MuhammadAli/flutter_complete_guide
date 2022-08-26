@@ -14,6 +14,20 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  final questions = const[
+    {
+      'questionText': 'what\'s your favorite color?',
+      'answers': ['Black', 'Green', 'Red', 'White'],
+    },
+    {
+      'questionText': 'what\'s your favorite animal?',
+      'answers': ['Rabbit', 'Goat', 'Horse', 'Camel'],
+    },
+    {
+      'questionText': 'who\'s your favorite instructor?',
+      'answers': ['Max', 'Max', 'Max', 'Max'],
+    }
+  ];
   var _questionIndex = 0;
 
   void _answerQuestion() {
@@ -22,32 +36,27 @@ class _MyAppState extends State<MyApp> {
     });
 
     print(_questionIndex);
+    if(_questionIndex<questions.length)
+      {
+        print('We have more questions!');
+      }
+    else
+      {
+        print('No more questions!');
+      }
   }
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    var questions = [
-      {
-        'questionText': 'what\'s your favorite color?',
-        'answers': ['Black', 'Green', 'Red', 'White'],
-      },
-      {
-        'questionText': 'what\'s your favorite animal?',
-        'answers': ['Rabbit', 'Goat', 'Horse', 'Camel'],
-      },
-      {
-        'questionText': 'who\'s your favorite instructor?',
-        'answers': ['Max', 'Max', 'Max', 'Max'],
-      }
-    ];
+    
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
           title: Text("My First App"),
         ),
-        body: Column(
+        body: _questionIndex<questions.length ?Column(
           children: [
             Question(
               questions[_questionIndex]['questionText'].toString(),
@@ -56,7 +65,7 @@ class _MyAppState extends State<MyApp> {
               return Answer(_answerQuestion,answer);
             }).toList(),
           ],
-        ),
+        ):Center(child:Text("you did it!") ,),
       ),
     );
   }
